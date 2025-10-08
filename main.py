@@ -41,7 +41,7 @@ def analyze_image(req: ImageRequest):
                         " et son nom commun, donne une très brève description de l'animal, et, " 
                         "sur une échelle de 0.1 à 1.0 (donne une valeur décimale), indique le niveau de menace qu'il " 
                         "représente pour l'homme. Donne aussi un label correspondant pour le niveau de dangerosité pamis les"
-                        "options suivantes : 'faible', 'modéré', 'élevé', 'critique'. " 
+                        "options suivantes : 'faible'(0.0-0.3), 'modéré'(0.4-0.6), 'élevé'(0.7-0.9), 'critique'(0.9-1.0). " 
                         "Propose également une méthode de lutte appropriée contre ce nuisible."
                         "Retourne un tableau JSON où chaque élément comprend les champs suivants :"
                         "common_name, scientific_name, description, threat, label, control."
