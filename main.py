@@ -39,9 +39,10 @@ def analyze_image(req: ImageRequest):
                     types.Part(text=(
                         "For the following image, identify the animal in it, give its scientific and common name, "
                         "give a very brief description of the animal,"
-                        " and on a scale of 1 to 10, give the level of threat it represents to man. "
+                        " and on a scale of 0.1 to 1.0 (give a value in double), give the level of threat it represents to man. "
+                        "Also, suggest a suitable control method for this pest. "
                         "Return a JSON array where each item includes the fields: "
-                        "`common_name`, `scientific_name`, `description`, `threat`."
+                        "`common_name`, `scientific_name`, `description`, `threat`, `control`."
                     )),
                     types.Part(inline_data=types.Blob(
                         mime_type="image/jpeg",
