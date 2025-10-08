@@ -9,7 +9,7 @@ from google.genai import types
 
 app = FastAPI()
 
-
+#Try git
 # Initialize Gemini client
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
