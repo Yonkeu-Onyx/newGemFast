@@ -9,8 +9,6 @@ from google.genai import types
 
 app = FastAPI()
 
-# Replace with your actual Gemini API key or use environment variable
-# API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY")
 
 # Initialize Gemini client
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
