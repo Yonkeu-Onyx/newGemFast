@@ -15,6 +15,10 @@ client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 class ImageRequest(BaseModel):
     image_url: str
+    
+class LocationRequest(BaseModel):
+    latitude: float
+    longitude: float
 
 
 @app.post("/analyze_image")
@@ -70,3 +74,9 @@ def analyze_image(req: ImageRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/getcity")
+def get_city(location : LocationRequest):
+    print(f'Latitude: {location.latitude}')
+    print(f'Longitude: {location.longitude}')
+    return None
