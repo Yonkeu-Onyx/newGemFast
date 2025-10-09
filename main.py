@@ -26,8 +26,8 @@ class ImageRequest(BaseModel):
     image_url: str
     
 class LocationRequest(BaseModel):
-    latitude: float
-    longitude: float
+    latitude: str
+    longitude: str
 
 
 @app.post("/analyze_image")
@@ -88,11 +88,16 @@ def analyze_image(req: ImageRequest):
 def get_city(location : LocationRequest):
     print(f'Latitude: {location.latitude}')
     print(f'Longitude: {location.longitude}')
-    response = requests.get(f'{maps_base_url}latlng={location.latitude},{location.longitude}&key={maps_api_key}', headers=headers)
+    lat = float(location.latitude)
+    lon = float(location.longitude)
+    response = requests.get(f'{maps_base_url}latlng={lat},{lon}&key={maps_api_key}', headers=headers)
     data = response.json()
     city_name = extract_locality_long_name(data)
+    name = {
+        "city": city_name
+    }
 
-    return city_name
+    return name
 
 
 def extract_locality_long_name(data):
