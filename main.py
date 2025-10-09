@@ -79,4 +79,5 @@ def analyze_image(req: ImageRequest):
 def get_city(location : LocationRequest):
     print(f'Latitude: {location.latitude}')
     print(f'Longitude: {location.longitude}')
-    return None
+    data = json.loads(location)
+    return data
