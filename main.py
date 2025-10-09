@@ -6,12 +6,21 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from google import genai
 from google.genai import types
+from dotenv import load_dotenv
 
 app = FastAPI()
+
+load_dotenv()
 
 #Try git
 # Initialize Gemini client
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+
+maps_api_key = os.environ.get("MAPS_API_KEY")
+maps_base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
+headers = {
+    "Content-Type": "application/json",
+}
 
 class ImageRequest(BaseModel):
     image_url: str
@@ -79,8 +88,22 @@ def analyze_image(req: ImageRequest):
 def get_city(location : LocationRequest):
     print(f'Latitude: {location.latitude}')
     print(f'Longitude: {location.longitude}')
-    data = {
-        "latitude": location.latitude,
-        "longitude": location.longitude
-    }
-    return data
+    response = requests.get(f'{maps_base_url}latlng={location.latitude},{location.longitude}&key={maps_api_key}', headers=headers)
+    data = response.json()
+    city_name = extract_locality_long_name(data)
+
+    return city_name
+
+
+def extract_locality_long_name(data):
+    """
+    Extracts the long_name from address_components where types contains 
+    both 'locality' and 'political'.
+    Returns the first match found or None if not found.
+    """
+    for result in data.get("results", []):
+        for component in result.get("address_components", []):
+            types = component.get("types", [])
+            if "locality" in types and "political" in types:
+                return component.get("long_name")
+    return None
