@@ -6,11 +6,11 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from google import genai
 from google.genai import types
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 app = FastAPI()
 
-# load_dotenv()
+load_dotenv()
 
 #Try git
 # Initialize Gemini client
